@@ -27,6 +27,12 @@ kubectl cp ShutdownAdminServer.py $(kubectl get pod -l app=integrated144 -o json
 kubectl cp ExecuteWebLogicOnly.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
 kubectl cp JDBCReplace.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
 kubectl cp JDBCList $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+kubectl cp flexcube.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
+# Load Kernel144 to Image
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "exec 1>/dev/null; sh /flexcube.sh"
+# Transfer config.xml of Weblogic
+kubectl cp config.xml $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/scratch/gsh/kernel144/user_projects/domains/integrated/config/config.xml
+kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "chown gsh:gsh /scratch/gsh/kernel144/user_projects/domains/integrated/config/config.xml"
 # Change JDBC configuration
 kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /JDBCReplace.sh /JDBCList $JDBCString $JDBCPassword"
 # Run Weblogic
