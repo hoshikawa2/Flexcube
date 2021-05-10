@@ -1,4 +1,4 @@
-# Deploying Flexcube in OCI OKE
+# Deploying Flexcube in OCI OKE with ORACLE VISUAL BUILDER STUDIO
 
 Observations:
 
@@ -8,6 +8,17 @@ Observations:
    * WebLogic Configuration
    * Database Configuration
    * Flexcube Servers
+
+### For manual deployment (Simple way)
+
+    kubectl delete deployment integrated144-deployment
+    
+    kubectl apply -f integrated144.yaml
+    
+    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh"
+    
+    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh initializeConfig.sh jdbc:oracle:thin:@132.145.191.118:1521/DB0401_iad15g.subnet04010815.vcn04010815.oraclevcn.com {AES256}7kfaltdnEBjKNqdHFhUn7o10DRIU0IcLOynq1ee8Ib8="
+
 
 ### Building Flexcube Docker Image
 
