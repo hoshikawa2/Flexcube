@@ -11,8 +11,14 @@ Observations:
 
 ### For manual deployment (Simple way)
 
+    If you already have a Pod/Deployment:
+
     kubectl delete deployment integrated144-deployment
-    
+   
+    ------
+  
+    Or if you want to create a new Deployment:
+ 
     kubectl apply -f integrated144.yaml
     
     kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh"
