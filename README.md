@@ -35,7 +35,6 @@ Observations:
 
     flexcube.sh
     
-    #cd /  <— Does not have this because of su - gsh
     su - gsh
     wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/Y86rX7N3n5m39BuMsxkRY-uP5O1ha2ZVEOv-oazTmA6MDf0XNtki8gGymsvYvPEf/n/id3kyspkytmr/b/bucket_banco_conceito/o/kernel144_11Mar21.zip
     unzip kernel144_11Mar21.zip
