@@ -185,19 +185,23 @@ The Flexcube team needs to build the image with:
           targetPort: 7001
       type: LoadBalancer
 
-#### EXECUTE WEBLOGIC
+### Manual Controls
+
+If you want to start or stop WebLogic, you can execute these commands.
+
+#### Execute WebLogic
 
     kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/startNodeManager.sh &"
 
     kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/startWebLogic.sh &"
 
-#### STOP WEBLOGIC
+#### Stop WebLogic
 
     kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/stopNodeManager.sh &"
 
     kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /scratch/gsh/kernel144/user_projects/domains/integrated/bin/stopWebLogic.sh &"
 
-#### Changing Passwords in JDBC Configuration
+#### Changing Database Passwords in JDBC Configuration
 
     domainsDetails.properties
 
