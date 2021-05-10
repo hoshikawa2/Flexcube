@@ -71,9 +71,7 @@ The Flexcube team needs to build the image with:
 
 ### Automating the deployment for OKE
 
-    COPIAR O TAR para o integrated144 (/usr/bin)
-
-#### Change Password to AES format with weblogic.security.Encrypt
+#### Change Database Password to AES format with weblogic.security.Encrypt
 
     cd /scratch/gsh/oracle/wlserver/server/bin
     .  ./setWLSEnv.sh
