@@ -20,8 +20,9 @@ spec:
       containers:
       - name: integrated144
         image: iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
-        command: [ "/bin/bash", "-c", "--" ]
-        args: [ "while true; do sleep 30; done;" ]
+        command: [ "/bin/sh", "-c"]
+        args:
+          [ "while true; do sleep 30; done;" ]
         ports:
         - name: port7001
           containerPort: 7001
