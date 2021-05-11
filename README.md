@@ -184,6 +184,20 @@ The Flexcube team needs to build the image with:
         - port: 7001
           targetPort: 7001
       type: LoadBalancer
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: integrated144-webservices
+      labels:
+        app: integrated144
+    spec:
+      selector:
+        app: integrated144
+      ports:
+        - port: 7005
+          targetPort: 7005
+      type: LoadBalancer
 
 ### Manual Controls
 
