@@ -23,7 +23,7 @@ Observations:
     
     kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh"
     
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh initializeConfig.sh jdbc:oracle:thin:@132.145.191.118:1521/DB0401_iad15g.subnet04010815.vcn04010815.oraclevcn.com {AES256}7kfaltdnEBjKNqdHFhUn7o10DRIU0IcLOynq1ee8Ib8="
+    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh initializeConfig.sh <JDBC Connection String> {AES256}7kfaltdnEBjKNqdHFhUn.....U0IcLOynq1ee8Ib8="
 
 
 ### Building Flexcube Docker Image
@@ -75,12 +75,12 @@ The Flexcube team needs to build the image with:
 
     cd /scratch/gsh/oracle/wlserver/server/bin
     .  ./setWLSEnv.sh
-    java -Dweblogic.RootDirectory=/scratch/gsh/kernel144/user_projects/domains/integrated  weblogic.security.Encrypt INt#grat#d144
+    java -Dweblogic.RootDirectory=/scratch/gsh/kernel144/user_projects/domains/integrated  weblogic.security.Encrypt <Database Password>
 
 #### Environment Variables
 
-    $JDBCPassword: {AES256}7kfaltdnEBjKNqdHFhUn7o10DRIU0IcLOynq1ee8Ib8=     (In AES format*)
-    $JDBCString: jdbc:oracle:thin:@132.145.191.118:1521/DB0401_iad15g.subnet04010815.vcn04010815.oraclevcn.com
+    $JDBCPassword: {AES256}7kfaltdnEBjKNq.......RIU0IcLOynq1ee8Ib8=     (In AES format*)
+    $JDBCString: <JDBC Connection String>
 
 #
     OCI CLI Install
@@ -219,8 +219,8 @@ If you want to start or stop WebLogic, you can execute these commands.
 
     domainsDetails.properties
 
-    ds.jdbc.new.1=jdbc:oracle:thin:@132.145.191.118:1521/DB0401_iad15g.subnet04010815.vcn04010815.oraclevcn.com
-    ds.password.new.1={AES256}7kfaltdnEBjKNqdHFhUn7o10DRIU0IcLOynq1ee8Ib8=
+    ds.jdbc.new.1=jdbc:oracle:thin:@xxx.xxx.xxx.xxx:1521/DBSTRING.subnet04...815.vcn04...815.oraclevcn.com
+    ds.password.new.1={AES256}7kfaltdnEBjKNqdH..............ynq1ee8Ib8=
 
 #
 
