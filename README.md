@@ -21,10 +21,7 @@ Observations:
  
     kubectl apply -f integrated144.yaml
     
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh"
-    
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh initializeConfig.sh <JDBC Connection String> {AES256}7kfaltdnEBjKNqdHFhUn.....U0IcLOynq1ee8Ib8="
-
+    Remember: Change the JDBC parameters inside integrated144.yaml
 
 ### Building Flexcube Docker Image
 
@@ -33,16 +30,15 @@ Observations:
 
 ### Merge Fusion Docker Image with Flexcube
 
-    flexcube.sh
+    Execute docker image with:
+    sudo docker start integrated144
     
-    su - gsh
-    cd /
-    wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/Y86rX7N3n5m39BuMsxkRY-uP5O1ha2ZVEOv-oazTmA6MDf0XNtki8gGymsvYvPEf/n/id3kyspkytmr/b/bucket_banco_conceito/o/kernel144_11Mar21.zip
-    unzip -o kernel144_11Mar21.zip -d /
-    cd /scratch/gsh/kernel144/user_projects/domains/integrated/bin
+Go to Weblogic Admin Server and change machine-1 Listen Address:
+
+![weblogic-machine-1.png](https://github.com/hoshikawa2/repo-image/blob/master/weblogic-machine-1.png?raw=true)
+
 
 Then execute:
-
 
     sudo docker cp flexcube.sh integrated144:/
 
