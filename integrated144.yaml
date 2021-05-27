@@ -1,3 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: flexcubeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: oci
+  resources:
+    requests:
+      storage: 500Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,7 +36,7 @@ spec:
         command: [ "/bin/sh", "-c"]
         args:
 #          [ "while true; do sleep 30; done;" ]
-         [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh jdbc:oracle:thin:@0.0.0.0:1521/DB0401_iad15g.subnet00000005.vcn0000000015.oraclevcn.com {AES256}7kfaltdnEBjxxxxxxxxxxxxxxx1ee8Ib8=;" ]
+         [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh jdbc:oracle:thin:@132.145.191.118:1521/DB0401_iad15g.subnet04010815.vcn04010815.oraclevcn.com {AES256}7kfaltdnEBjKNqdHFhUn7o10DRIU0IcLOynq1ee8Ib8=;" ]
         ports:
         - name: port7001
           containerPort: 7001
@@ -86,7 +99,7 @@ spec:
           limits:
             cpu: "5"
             memory: "36Gi"
-      restartPolicy: Always
+#      restartPolicy: Always
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -135,15 +148,3 @@ spec:
     - port: 7005
       targetPort: 7005
   type: LoadBalancer
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: flexcubeclaim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: oci
-  resources:
-    requests:
-      storage: 200Gi
