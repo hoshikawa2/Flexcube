@@ -138,7 +138,7 @@ The Flexcube team needs to build the image with:
             command: [ "/bin/sh", "-c"]
             args:
               [ "while true; do sleep 30; done;" ]
-    #         [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh jdbc:oracle:thin:@0.0.0.0:1521/DB0401_iad15g.subnet00000015.vcn040000015.oraclevcn.com {AES256}7kfaltdnEBjKNqdHFhUn7o10xxxxxxxxxxxxxxxxxxxxxxxxxDRIU0IcLOynq1ee8Ib8=;" ]
+    #         [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh jdbc:oracle:thin:@0.0.0.0:1521/DB0401_iad15g.subnet00000015.vcn040000015.oraclevcn.com {AES256}7kfaltdnEBjKNqdHFhUn7o10xxxxxxxxxxxxxxxxxxxxxxxxxDRIU0IcLOynq1ee8Ib8=; while true; do sleep 30; done;" ]
             ports:
             - name: port7001
               containerPort: 7001
