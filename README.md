@@ -28,6 +28,18 @@ Observations:
 
     sudo docker run --name integrated144 -h "fcubs.oracle.com" -p 7001-7020:7001-7020 -it "iad.ocir.io/id3kyspkytmr/oraclefmw-infra_with_patch:12.2.1.4.0" /bin/bash
 
+### flexcube.sh
+
+This bash script loads the Flexcube artifacts inside docker image
+
+    flexcube.sh file:
+    
+    su - gsh
+    cd /
+    wget "https://objectstorage.us-ashburn-1.oraclecloud.com/p/Y86rX7N3n5m39BuMsxkRY-uP5O1ha2ZVEOv-oazTmA6MDf0XNtki8gGymsvYvPEf/n/id3kyspkytmr/b/bucket_banco_conceito/o/kernel144_11Mar21.zip"
+    unzip -o kernel144_11Mar21.zip -d /
+    cd /scratch/gsh/kernel144/user_projects/domains/integrated/bin
+
 ### Merge Fusion Docker Image with Flexcube
 
     Execute docker image with:
@@ -41,8 +53,6 @@ Go to Weblogic Admin Server and change machine-1 Listen Address:
 Then execute:
 
     sudo docker cp flexcube.sh integrated144:/
-
-    sudo docker start integrated144
 
     sudo docker exec integrated144 /bin/bash -c "sh /flexcube.sh"
 
@@ -82,7 +92,6 @@ The Flexcube team needs to build the image with:
     OCI CLI Install
     Unix Shell
 
-
     #  Prepare for kubectl from OCI CLI
     mkdir -p $HOME/.kube
     oci ce cluster create-kubeconfig --cluster-id ocid1.cluster.oc1.iad.aaaaaaaaae3tmyldgbtgmyjrmyzdeytbhazdmmbrgfstmntdgc2wmzrxgbrt --file $HOME/.kube/config --region us-ashburn-1 --token-version 2.0.0
@@ -90,37 +99,15 @@ The Flexcube team needs to build the image with:
     # Deploy integrated144
     kubectl config view
     kubectl get nodes
-    kubectl replace -f integrated144.yaml --force
+    kubectl replace -f integrated144-devops.yaml --force
     kubectl rollout status deployment integrated144-deployment
     # Set Variables
     export JDBCString=$JDBCString
     export JDBCPassword=$JDBCPassword
-    # Install tar
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "yum install tar -y"
-    # Copy files to automation
-    touch domainsDetails.properties
-    echo "ds.jdbc.new.1=$JDBCString" > domainsDetails.properties
-    echo "ds.password.new.1=$JDBCPassword" >> domainsDetails.properties
-    kubectl cp domainsDetails.properties $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp ChangeJDBC.py $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp ChangeJDBC.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp ExecuteWebLogic.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp StartApps.py $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp StartApps.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp ShutdownAdminServer.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp ShutdownAdminServer.py $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp ExecuteWebLogicOnly.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp JDBCReplace.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp JDBCList $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    kubectl cp RestartFlexcube.sh $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}"):/
-    # Change JDBC configuration
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /JDBCReplace.sh /JDBCList $JDBCString $JDBCPassword"
-    # Run Weblogic
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /ExecuteWebLogic.sh"
-    sleep 180
-    # Start Apps
-    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh /StartApps.sh"
-    kubectl get pods
+    #Load initialize script 
+    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh"
+    #Run Automated process to up Weblogic and Applications
+    kubectl exec $(kubectl get pod -l app=integrated144 -o jsonpath="{.items[0].metadata.name}") -- /bin/bash -c "sh initializeConfig.sh $JDBCString $JDBCPassword"
 
 # 
 
@@ -136,20 +123,89 @@ The Flexcube team needs to build the image with:
         matchLabels:
           app: integrated144
       template:
-    metadata:
+        metadata:
           labels:
             app: integrated144
         spec:
+          hostname: integrated144
+          hostAliases:
+          - ip: "127.0.0.1"
+            hostnames:
+            - "fcubs.oracle.com"
           containers:
           - name: integrated144
             image: iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
-            command: [ "/bin/bash", "-c", "--" ]
-            args: [ "while true; do sleep 30; done;" ]
+            command: [ "/bin/sh", "-c"]
+            args:
+              [ "while true; do sleep 30; done;" ]
+    #         [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh jdbc:oracle:thin:@132.145.191.118:1521/DB0401_iad15g.subnet04010815.vcn04010815.oraclevcn.com {AES256}7kfaltdnEBjKNqdHFhUn7o10DRIU0IcLOynq1ee8Ib8=;" ]
             ports:
             - name: port7001
               containerPort: 7001
+            - name: port7002
+              containerPort: 7002
+            - name: port7003
+              containerPort: 7003
             - name: port7004
               containerPort: 7004
+            - name: port7005
+              containerPort: 7005
+            - name: port7006
+              containerPort: 7006
+            - name: port7007
+              containerPort: 7007
+            - name: port7008
+              containerPort: 7008
+            - name: port7009
+              containerPort: 7009
+            - name: port7010
+              containerPort: 7010
+            - name: port7011
+              containerPort: 7011
+            - name: port7012
+              containerPort: 7012
+            - name: port7013
+              containerPort: 7013
+            - name: port7014
+              containerPort: 7014
+            - name: port7015
+              containerPort: 7015
+            - name: port7016
+              containerPort: 7016
+            - name: port7017
+              containerPort: 7017
+            - name: port7018
+              containerPort: 7018
+            - name: port7019
+              containerPort: 7019
+            - name: port7020
+              containerPort: 7020
+            - name: port5556
+              containerPort: 5556
+    #        livenessProbe:
+    #          httpGet:
+    #            path: /console
+    #            port: 7001
+    #          initialDelaySeconds: 3000
+    #          timeoutSeconds: 30
+    #          periodSeconds: 300
+    #          failureThreshold: 3
+            volumeMounts:
+              - name: data
+                mountPath: /tmp
+                readOnly: false
+            resources:
+              requests:
+                cpu: "4"
+                memory: "16Gi"
+              limits:
+                cpu: "4"
+                memory: "16Gi"
+          restartPolicy: Always
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: flexcubeclaim
           imagePullSecrets:
           - name: ocirsecret
     ---
@@ -194,6 +250,20 @@ The Flexcube team needs to build the image with:
         - port: 7005
           targetPort: 7005
       type: LoadBalancer
+    ---
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: flexcubeclaim
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: oci
+      resources:
+        requests:
+          storage: 200Gi
+
+
 
 ### Manual Controls
 
