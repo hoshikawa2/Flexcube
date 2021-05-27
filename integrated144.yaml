@@ -82,10 +82,10 @@ spec:
         resources:
           requests:
             cpu: "4"
-            memory: "20Gi"
+            memory: "32Gi"
           limits:
             cpu: "4"
-            memory: "20Gi"
+            memory: "32Gi"
       restartPolicy: Always
       volumes:
         - name: data
