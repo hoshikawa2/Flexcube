@@ -81,11 +81,11 @@ spec:
             readOnly: false
         resources:
           requests:
-            cpu: "4"
-            memory: "32Gi"
+            cpu: "5"
+            memory: "36Gi"
           limits:
-            cpu: "4"
-            memory: "32Gi"
+            cpu: "5"
+            memory: "36Gi"
       restartPolicy: Always
       volumes:
         - name: data
