@@ -197,10 +197,10 @@ The Flexcube team needs to build the image with:
             resources:
               requests:
                 cpu: "4"
-                memory: "16Gi"
+                memory: "32Gi"
               limits:
                 cpu: "4"
-                memory: "16Gi"
+                memory: "32Gi"
           restartPolicy: Always
           volumes:
             - name: data
