@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm -f /flexcube.sh
 su - gsh
 
 touch /domainsDetails.properties
