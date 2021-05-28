@@ -96,9 +96,11 @@ spec:
           requests:
             cpu: "5"
             memory: "36Gi"
+            ephemeral-storage: "500Gi"
           limits:
             cpu: "5"
             memory: "36Gi"
+            ephemeral-storage: "500Gi"
 #      restartPolicy: Always
       volumes:
         - name: data
