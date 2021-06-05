@@ -27,7 +27,7 @@ spec:
           value: "--JDBCPassword--"
         command: [ "/bin/sh", "-c"]
         args:
-        [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh $(JDBCSTRING) $(JDBCPASSWORD); while true; do sleep 30; done;" ]
+          [ "sleep 180; cd /; wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/0YTvKvrmiae_ZUoq4ft48Wt3eQfZRCYlrIgjrzADHdJfkkyfkr_4lA4PNF8MrOCj/n/id3kyspkytmr/b/bucket_banco_conceito/o/initializeConfig.sh; sh initializeConfig.sh $(JDBCSTRING) $(JDBCPASSWORD); while true; do sleep 30; done;" ]
         ports:
         - name: port7001
           containerPort: 7001
