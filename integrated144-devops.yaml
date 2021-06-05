@@ -71,31 +71,24 @@ spec:
           containerPort: 7020
         - name: port5556
           containerPort: 5556
-#        livenessProbe:
-#          httpGet:
-#            path: /console
-#            port: 7001
-#          initialDelaySeconds: 3000
-#          timeoutSeconds: 30
-#          periodSeconds: 300
-#          failureThreshold: 3
-        volumeMounts:
-          - name: data
-            mountPath: /tmp
-            readOnly: false
+        livenessProbe:
+          httpGet:
+            path: /console
+            port: 7001
+          initialDelaySeconds: 3000
+          timeoutSeconds: 30
+          periodSeconds: 300
+          failureThreshold: 3
         resources:
           requests:
             cpu: "5"
-            memory: "36Gi"
+            memory: "40Gi"
           limits:
             cpu: "5"
-            memory: "36Gi"
+            memory: "40Gi"
       restartPolicy: Always
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: flexcubeclaim
       imagePullSecrets:
+      # enter the name of the secret you created
       - name: ocirsecret
 ---
 apiVersion: v1
@@ -139,15 +132,3 @@ spec:
     - port: 7005
       targetPort: 7005
   type: LoadBalancer
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: flexcubeclaim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: oci
-  resources:
-    requests:
-      storage: 200Gi
