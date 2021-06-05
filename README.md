@@ -84,7 +84,7 @@ Go to Weblogic Admin Server and change machine-1 Listen Address:
     http://<your docker IP>:7001/console
     
     if you mount your image locally, you can access the Admin Manager with:
-    http://localhost:7001/console
+    http://0.0.0.0:7001/console
     
 Now, you need to configure the Listen Address:
 
