@@ -100,11 +100,11 @@ The Flexcube team needs to build the image with:
     export JDBCString=$JDBCString
     export JDBCPassword=$JDBCPassword
     # setup the JDBC variables in integrated144-devops.yaml
-    sed -i "s~--JDBDString--~$JDBCString~g" integrated144-devops.yaml
-    sed -i "s~--JDBCPassword--~$JDBCPassword~g" integrated144-devops.yaml
+    echo 'sed -i "s~--JDBDString--~$JDBCString~g" integrated144-devops.yaml' > devops.sh
+    echo 'sed -i "s~--JDBCPassword--~$JDBCPassword~g" integrated144-devops.yaml' >> devops.sh
+    sh devops.sh
     # Deploy integrated144
     kubectl config view
-    kubectl get nodes
     kubectl replace -f integrated144-devops.yaml --force
 
 # 
