@@ -38,6 +38,11 @@ If you want to clusterize your instances, you have to do it manually.
 
 ## Building Flexcube Docker Image
 
+    You can build a customized image of Flexcube, but you can use this image on my repository:
+        
+    iad.ocir.io/id3kyspkytmr/flexcube/integrated144:v1
+
+
 Here I explain how to make your Flexcube base image in docker. 
 First, we need to use a Fusion Image.
 There is a Fusion image on my repository. Execute the docker run to start the process:
