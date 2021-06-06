@@ -384,6 +384,8 @@ These scripts change the configuration of all JDBC XML files inside the Weblogic
 
     save()
     activate()
+#
+    Important: The JDBC configuration files for the Flexcube is on /scratch/gsh/kernel144/user_projects/domains/integrated/config/jdbc
 
 #
 
