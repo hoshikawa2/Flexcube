@@ -150,3 +150,17 @@ spec:
     - port: 7005
       targetPort: 7005
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: integrated144-webservices2
+  labels:
+    app: integrated144
+spec:
+  selector:
+    app: integrated144
+  ports:
+    - port: 7009
+      targetPort: 7009
+  type: LoadBalancer
