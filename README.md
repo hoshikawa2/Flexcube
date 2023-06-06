@@ -95,7 +95,7 @@ Now, you need to configure the Listen Address:
     5. Put "fcubs.oracle.com" in the Listen Address 
     6. Save the configuration and Apply the update
 
-![weblogic-machine-1.png](https://github.com/hoshikawa2/repo-image/blob/master/weblogic-machine-1.png?raw=true)
+![weblogic-machine-1.png](https://github.com/hoshikawa2/repo-image/blob/master/weblogic-machine-1-1.png?raw=true)
 
 And for push the docker image to OCIR:
 
@@ -156,13 +156,13 @@ This is the DevOps shell script to prepare a Flexcube Image and make it work for
 You can configure your Build Pipeline in **Oracle Visual Builder Studio** like this:
 
 **Git Configuration:**
-![vbst-git-config.png](https://github.com/hoshikawa2/repo-image/blob/master/vbst-git-config.png?raw=true)
+![vbst-git-config.png](https://github.com/hoshikawa2/repo-image/blob/master/vbst-git-config-1.png?raw=true)
 
 **Parameters Configuration:**
-![vbst-config-parameters.png](https://github.com/hoshikawa2/repo-image/blob/master/vbst-config-parameters.png?raw=true)
+![vbst-config-parameters.png](https://github.com/hoshikawa2/repo-image/blob/master/vbst-config-parameters-1.png?raw=true)
 
 **Steps Configuration**
-![vbst-steps-config.png](https://github.com/hoshikawa2/repo-image/blob/master/vbst-steps-config.png?raw=true)
+![vbst-steps-config.png](https://github.com/hoshikawa2/repo-image/blob/master/vbst-steps-config-1.png?raw=true)
 
 #### YAML file for deploy the Flexcube Image into the Kubernetes Cluster
 
